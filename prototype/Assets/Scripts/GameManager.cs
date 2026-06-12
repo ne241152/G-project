@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour
     public GameObject zombiePrefab;
     public GameObject batPrefab;
     public TextMeshProUGUI timerText;
-    public UIManager uiManager; // ←追加：これでInspectorに枠が出ます
+    public UIManager uiManager;
 
     private Transform player;
     private float spawnTimer = 0f;
@@ -36,7 +36,6 @@ public class GameManager : MonoBehaviour
         if (gameTime >= 180f) {
             if (timerText != null) timerText.text = "Game Clear!"; 
             
-            // ↓変更：UIManagerにクリア画面を出してもらう
             if (uiManager != null) {
                 uiManager.ShowResult(true); 
             } else {
