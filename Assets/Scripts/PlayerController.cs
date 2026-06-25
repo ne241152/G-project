@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;//追加
 using TMPro;
 
 public class PlayerController : MonoBehaviour
@@ -8,20 +9,26 @@ public class PlayerController : MonoBehaviour
     public int currentExp = 0;
     public int expToNextLevel = 10;
     public int currentLevel = 1;
+    public int BattlePhase = 1;
 
     public GameObject bulletPrefab;
     public TextMeshProUGUI hpText;
     public UIManager uiManager; 
+    public Slider expSlider;//追加
 
+    //攻撃系
     private bool hasBurst = false;
     private float gatlingTimer = 0f;
     private float burstTimer = 0f;
+    public float damageRate = 1.0f;
+    public float gatlingInterval = 0.5f;
     private Rigidbody2D rb;
 
     void Start() 
     { 
         rb = GetComponent<Rigidbody2D>(); 
         UpdateHPText();
+        UpdateExpBar();//追加
     }
 
     void Update()
@@ -34,7 +41,7 @@ public class PlayerController : MonoBehaviour
         rb.linearVelocity = new Vector2(moveX, moveY).normalized * speed;
 
         gatlingTimer += Time.deltaTime;
-        if (gatlingTimer >= 0.5f) {
+        if (gatlingTimer >= gatlingInterval) {
             FireGatling();
             gatlingTimer = 0f;
         }
@@ -90,15 +97,43 @@ public class PlayerController : MonoBehaviour
             currentLevel++;
             
             if (uiManager != null) {
-                uiManager.ShowLevelUp();
+                uiManager.ShowLevelUp(BattlePhase);
             } else {
                 Time.timeScale = 0;
             }
+            BattlePhase++;
+        }
+        UpdateExpBar();
+    }
+
+    public void IncreaseHP(int amount)
+    {
+        hp += amount;
+        UpdateHPText();
+    }
+
+    public void IncreaseDefense(float percent)
+    {
+        damageRate *= (100f - percent) / 100f;
+    }
+
+    public void IncreaseAttackSpeed(float percent)
+    {
+        gatlingInterval *= (100f - percent) / 100f;
+    }
+
+    public void UpdateExpBar()
+    {
+        if (expSlider != null)
+        {
+            expSlider.maxValue = expToNextLevel;
+            expSlider.value = currentExp;
         }
     }
 
     public void TakeDamage(int dmg)
     {
+        dmg = Mathf.RoundToInt(dmg * damageRate);
         hp -= dmg;
         if (hp <= 0) {
             hp = 0;
