@@ -62,7 +62,7 @@ public class UIManager : MonoBehaviour
         switch (phase)
         {
             case 1:
-                title1.text = "test1";
+                title1.text = "Long Password";
                 description1.text = "test_1test_1test_1test_1test_1test_1";
                 icon1.sprite = testSprite;
 
@@ -107,21 +107,64 @@ public class UIManager : MonoBehaviour
     // 強化カードを選んだ時の処理（カードのボタンから呼ばれる）
     public void SelectSkillCard(int cardNo)
     {
-        switch (cardNo)
-        {
+        switch (player.BattlePhase){
             case 1:
-                player.IncreaseDefense(20f);
-                break;
+                switch (cardNo){
+                    case 1:
+                        player.IncreaseDefense(20f);
+                        player.DecreaseAttackSpeed(20f);
+                        break;
 
+                    case 2:
+                        //特定の敵に対して無敵
+                        break;
+
+                    case 3:
+                        player.EnableRevive();
+                        player.DecreaseMoveSpeed(30f);
+                        break;
+                }
+                break;
             case 2:
-                player.IncreaseAttackSpeed(50f);
-                break;
+                switch (cardNo){
+                    case 1:
+                        //ドローンの追加・頻度ランダム
+                        break;
 
+                    case 2://デメリットがまだ未実装
+                        player.IncreaseAttackPower(1);
+                        player.IncreaseAttackSpeed(50f);
+                        //特定の敵にだけ攻撃が効かない・武器を追加するのか？
+                        break;
+
+                    case 3:
+                        //遅延型の大技・狙いはどうやってつけるのか
+                        break;
+                }
+                break;
             case 3:
-                // Card3の効果
+                switch (cardNo){
+                    case 1:
+                        player.IncreaseAttackSpeed(20f);
+                        player.IncreaseDefense(10f);
+                        player.IncreaseMoveSpeed(10f);
+                        //経験値獲得量増加・ここで増加しても意味があるのか
+                        //バリアを四方に置いて一箇所破られる？
+                        break;
+
+                    case 2:
+                        //プレイヤーと同じ攻撃を行う分身を配置できる
+                        //パスキー進化していると全体的にステータス向上
+                        break;
+
+                    case 3:
+                        //敵の密度によってステータス変動
+                        //密度が少ないと移動速度上昇・多いと防御力、攻撃力上昇
+                        break;
+                }
                 break;
         }
-
+        player.BattlePhase++;
         levelUpPanel.SetActive(false);
         Time.timeScale = 1;
     }
