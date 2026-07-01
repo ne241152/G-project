@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     public int BattlePhase = 1;
 
     public GameObject bulletPrefab;
+    public GameObject dronePrefab;
     public TextMeshProUGUI hpText;
     public UIManager uiManager; 
     public Slider expSlider;//追加
@@ -22,6 +23,11 @@ public class PlayerController : MonoBehaviour
     private float gatlingTimer = 0f;
     private float burstTimer = 0f;
     public float gatlingInterval = 0.5f;
+    private GameObject currentDrone;//現在いるドローンの保存
+    private bool hasDelayBomb = false;
+    private float delayBombTimer = 0f;
+    public float delayBombInterval = 8f;//何秒ごとに撃つか
+    public GameObject delayBombPrefab;
 
     //防御系
     public float damageRate = 1.0f;
@@ -70,6 +76,16 @@ public class PlayerController : MonoBehaviour
                 invincibleTimer = 0f;
             }
         }
+
+        if (hasDelayBomb)
+        {
+            delayBombTimer += Time.deltaTime;
+            if (delayBombTimer >= delayBombInterval)
+            {
+                FireDelayBomb();
+                delayBombTimer = 0f;
+            }
+        }
     }
 
     void FireGatling()
@@ -103,6 +119,33 @@ public class PlayerController : MonoBehaviour
                     enemy.transform.position += (Vector3)kbDir * 1.5f;
                 }
             }
+        }
+    }
+
+    void FireDelayBomb()
+    {
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        if (enemies.Length == 0)//敵が周りにいるかを確認
+            return;
+
+        GameObject nearest = null;//一番近い敵を入れる用の箱
+        float minDist = Mathf.Infinity;//距離を入れる
+
+        foreach (GameObject e in enemies)
+        {
+            //enemiesとの距離を測っている
+            float dist = Vector2.Distance(transform.position, e.transform.position);
+
+            if (dist < minDist)//一番近いenemiesを探す
+            {
+                minDist = dist;
+                nearest = e;
+            }
+        }
+        if (nearest != null)
+        {
+            //PrefabのDelayBombをnearestに生成する
+            Instantiate(delayBombPrefab, nearest.transform.position, Quaternion.identity);
         }
     }
 
@@ -162,6 +205,23 @@ public class PlayerController : MonoBehaviour
     public void EnableRevive()
     {
         hasRevive = true;
+    }
+
+    public void CreateDrone()
+    {
+        if (currentDrone != null)
+            return;
+        currentDrone = Instantiate(dronePrefab);//DroneのPrefabを作成し、currentDroneに保存
+        DroneWeapon drone = currentDrone.GetComponent<DroneWeapon>();//DroneWeaponを取得する
+        drone.player = transform;//Droneをプレイヤーの周りに回らせる
+        drone.bulletPrefab = bulletPrefab;
+    }
+
+    public void EnableDelayBomb()
+    {
+        hasDelayBomb = true;
+        FireDelayBomb();// 最初の1発をすぐ発射
+        delayBombTimer = 0f;// 次の発射まで8秒
     }
 
     public void IncreaseAttackSpeed(float percent)

@@ -129,6 +129,7 @@ public class UIManager : MonoBehaviour
                 switch (cardNo){
                     case 1:
                         //ドローンの追加・頻度ランダム
+                        player.CreateDrone();
                         break;
 
                     case 2://デメリットがまだ未実装
@@ -139,6 +140,7 @@ public class UIManager : MonoBehaviour
 
                     case 3:
                         //遅延型の大技・狙いはどうやってつけるのか
+                        player.EnableDelayBomb();
                         break;
                 }
                 break;

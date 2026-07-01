@@ -36,6 +36,9 @@ prototype/
 │   │   ├── Bat
 │   │   ├── Bullet
 │   │   ├── Exp
+│   │   ├── Drone
+│   │   ├── DelayBomb
+│   │   ├── Explosion
 │   │   └── Zombie
 │   ├── Scenes/           # シーンファイル
 │   ├── Scripts/          # C#スクリプト
@@ -44,6 +47,9 @@ prototype/
 │   │   ├── Experience.cs     # 経験値アイテムの取得・管理
 │   │   ├── GameManager.cs    # ゲーム全体の進行・状態管理
 │   │   ├── PlayerController.cs # プレイヤーの入力・移動制御
+│   │   ├── DroneWeapon.cs    # ドローンの管理
+│   │   ├── DelayBomb.cs      # 爆弾の落下エフェクト・着弾位置・落下表示
+│   │   ├── Explosion.cs      # 爆発のダメージ・エフェクト・範囲判定
 │   │   └── UIManager.cs 
 │   ├── Settings/         # URPなどのRender設定
 │   └── TextMesh Pro/     # フォント・UIテキスト関連
