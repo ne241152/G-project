@@ -2047,9 +2047,17 @@ MonoBehaviour:
   currentLevel: 1
   BattlePhase: 1
   bulletPrefab: {fileID: 9135767063249597970, guid: 02a8faa0a016a42a1ace488cc40d0421, type: 3}
+  dronePrefab: {fileID: 3412988012995409877, guid: b2fa9130c62e846a1b445021bbd9c384, type: 3}
   hpText: {fileID: 1725058817}
   uiManager: {fileID: 1501246635}
   expSlider: {fileID: 1268963256}
+  attackPower: 1
+  gatlingInterval: 0.5
+  delayBombInterval: 8
+  delayBombPrefab: {fileID: 7231074936438221963, guid: 2415013de44f142c9bbe0d6ad8d8e176, type: 3}
+  damageRate: 1
+  hasRevive: 0
+  invincibleTime: 3
 --- !u!58 &783278374
 CircleCollider2D:
   m_ObjectHideFlags: 0
