@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 
 public class UIManager : MonoBehaviour
@@ -8,18 +7,7 @@ public class UIManager : MonoBehaviour
     public GameObject titlePanel;
     public GameObject gameHUDPanel;
     public GameObject levelUpPanel;
-    public TextMeshProUGUI title1;
-    public TextMeshProUGUI title2;
-    public TextMeshProUGUI title3;
-    public Image icon1;
-    public Image icon2;
-    public Image icon3;
-    public TextMeshProUGUI description1;
-    public TextMeshProUGUI description2;
-    public TextMeshProUGUI description3;
     public GameObject resultPanel;
-    public Sprite testSprite;
-    public PlayerController player;
 
     [Header("UI Elements")]
     public TextMeshProUGUI resultText;
@@ -50,10 +38,9 @@ public class UIManager : MonoBehaviour
     }
 
     // レベルアップ画面を表示
-    public void ShowLevelUp(int phase)
+    public void ShowLevelUp()
     {
         levelUpPanel.SetActive(true);
-        SetupCards(phase);
         Time.timeScale = 0; // 選択中は制限時間を止める 
     }
 
@@ -105,7 +92,7 @@ public class UIManager : MonoBehaviour
     }
 
     // 強化カードを選んだ時の処理（カードのボタンから呼ばれる）
-    public void SelectSkillCard(int cardNo)
+    public void SelectSkillCard()
     {
         switch (player.BattlePhase){
             case 1:
@@ -168,6 +155,7 @@ public class UIManager : MonoBehaviour
                 break;
         }
         player.BattlePhase++;
+        // ※今回はどのボタンを押しても一旦画面を閉じるだけの実装
         levelUpPanel.SetActive(false);
         Time.timeScale = 1;
     }

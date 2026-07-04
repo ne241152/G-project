@@ -73,18 +73,3 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
-
-
-# ==========================================
-# Mac & Editor Custom Settings (Added)
-# ==========================================
-
-# Macが自動生成する隠しファイル・フォルダの除外
-.DS_Store
-._*
-
-# VS Codeの設定フォルダの除外
-.vscode/
-
-# Monoのクラッシュログの除外
-mono_crash.*.json
