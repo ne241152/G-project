@@ -62,16 +62,16 @@ public class UIManager : MonoBehaviour
         switch (phase)
         {
             case 1:
-                title1.text = "Long Password";
-                description1.text = "test_1test_1test_1test_1test_1test_1";
-                icon1.sprite = testSprite;
+                title1.text = "長いパスワード";
+                description1.text = "パスワードの文字数を増やすことで、総当たり攻撃や推測攻撃に対する耐性を高める。一般的にパスワードは複雑さだけでなく長さも重要であり、長いパスワードほど解読に時間がかかる。\n効果\n最大HP、防御力UP\n攻撃速度DOWN";
+                //icon1.sprite = testSprite;
 
-                title2.text = "test2";
-                description2.text = "test_2test_2test_2test_2test_2test_2";
+                title2.text = "Passkey";
+                description2.text = "デバイス内で安全な秘密鍵を用いてデジタル署名を作り出す。そのため、フィッシング耐性がある。\n効果\nフィッシングバットからのダメージを無効にする";
                 //icon2.sprite = hpSprite;
 
-                title3.text = "test3";
-                description3.text = "test_3test_3test_3test_3test_3test_3";
+                title3.text = "2段階認証";
+                description3.text = "PW送信とは別に、別回線（SMS回線）を用いて一時的なコードを送ることで、アカウントの耐久力を引き上げる\n効果\n1度致命傷を受けても無敵時間を伴って復活\n移動速度DOWN";
                 //icon3.sprite = speedSprite;
                 break;
             case 2:
@@ -91,7 +91,7 @@ public class UIManager : MonoBehaviour
             case 3:
                 title1.text = "test7";
                 description1.text = "test_1test_1test_1test_1test_1test_1";
-                icon1.sprite = testSprite;
+                //icon1.sprite = testSprite;
 
                 title2.text = "test8";
                 description2.text = "test_2test_2test_2test_2test_2test_2";
@@ -112,6 +112,7 @@ public class UIManager : MonoBehaviour
                 switch (cardNo){
                     case 1:
                         player.IncreaseDefense(20f);
+                        player.IncreaseHP(40);
                         player.DecreaseAttackSpeed(20f);
                         break;
 
