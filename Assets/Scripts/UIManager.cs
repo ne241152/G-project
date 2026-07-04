@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class UIManager : MonoBehaviour
@@ -7,7 +8,18 @@ public class UIManager : MonoBehaviour
     public GameObject titlePanel;
     public GameObject gameHUDPanel;
     public GameObject levelUpPanel;
+    public TextMeshProUGUI title1;
+    public TextMeshProUGUI title2;
+    public TextMeshProUGUI title3;
+    public Image icon1;
+    public Image icon2;
+    public Image icon3;
+    public TextMeshProUGUI description1;
+    public TextMeshProUGUI description2;
+    public TextMeshProUGUI description3;
     public GameObject resultPanel;
+
+    public PlayerController player;
 
     [Header("UI Elements")]
     public TextMeshProUGUI resultText;
@@ -38,9 +50,10 @@ public class UIManager : MonoBehaviour
     }
 
     // レベルアップ画面を表示
-    public void ShowLevelUp()
+    public void ShowLevelUp(int phase)
     {
         levelUpPanel.SetActive(true);
+        SetupCards(phase);
         Time.timeScale = 0; // 選択中は制限時間を止める 
     }
 
@@ -64,7 +77,7 @@ public class UIManager : MonoBehaviour
             case 2:
                 title1.text = "test4";
                 description1.text = "test_1test_1test_1test_1test_1test_1";
-                icon1.sprite = testSprite;
+                //icon1.sprite = testSprite;
 
                 title2.text = "test5";
                 description2.text = "test_2test_2test_2test_2test_2test_2";
@@ -92,7 +105,7 @@ public class UIManager : MonoBehaviour
     }
 
     // 強化カードを選んだ時の処理（カードのボタンから呼ばれる）
-    public void SelectSkillCard()
+    public void SelectSkillCard(int cardNo)
     {
         switch (player.BattlePhase){
             case 1:
@@ -117,7 +130,7 @@ public class UIManager : MonoBehaviour
                 switch (cardNo){
                     case 1:
                         //ドローンの追加・頻度ランダム
-                        player.CreateDrone();
+                        //player.CreateDrone();
                         break;
 
                     case 2://デメリットがまだ未実装
@@ -128,7 +141,7 @@ public class UIManager : MonoBehaviour
 
                     case 3:
                         //遅延型の大技・狙いはどうやってつけるのか
-                        player.EnableDelayBomb();
+                        //player.EnableDelayBomb();
                         break;
                 }
                 break;
