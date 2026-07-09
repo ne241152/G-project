@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public enum EnemyType { Zombie, Bat }
+    public enum EnemyType { Zombie, Bat, None }//Noneは一旦種類関係なしのType
     public EnemyType type = EnemyType.Zombie;
     
     public int hp = 3;
@@ -51,7 +51,7 @@ public class Enemy : MonoBehaviour
         if (col.CompareTag("Player")) {
             damageTimer += Time.deltaTime;
             if (damageTimer >= 0.5f) {
-                col.GetComponent<PlayerController>().TakeDamage(attackDmg);
+                col.GetComponent<PlayerController>().TakeDamage(attackDmg, type, this);//どの敵が攻撃を仕掛けたか
                 damageTimer = 0f;
             }
         }

@@ -118,6 +118,7 @@ public class UIManager : MonoBehaviour
 
                     case 2:
                         //特定の敵に対して無敵
+                        player.EnablePasskey();
                         break;
 
                     case 3:

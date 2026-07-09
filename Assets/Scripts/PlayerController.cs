@@ -22,15 +22,17 @@ public class PlayerController : MonoBehaviour
     private float gatlingTimer = 0f;
     private float burstTimer = 0f;
     public float gatlingInterval = 0.5f;
-    private GameObject currentDrone;//現在いるドローンの保存
-    private bool hasDelayBomb = false;
-    private float delayBombTimer = 0f;
-    public float delayBombInterval = 8f;//何秒ごとに撃つか
-    public GameObject delayBombPrefab;
+    //private GameObject currentDrone;//現在いるドローンの保存
+    //private bool hasDelayBomb = false;
+    //private float delayBombTimer = 0f;
+    //public float delayBombInterval = 8f;//何秒ごとに撃つか
+    //public GameObject delayBombPrefab;
 
     //防御系
     public float damageRate = 1.0f;
     public bool hasRevive = false;//復活可能
+    public bool hasPasskey = false;//Passkeyを取得済みか
+
     private bool isInvincible = false;//無敵
     private float invincibleTimer = 0f;//無敵経過時間
     public float invincibleTime = 3f;//無敵時間
@@ -179,6 +181,11 @@ public class PlayerController : MonoBehaviour
         hasRevive = true;
     }
 
+    public void EnablePasskey()
+    {
+        hasPasskey = true;
+    }
+
     //public void CreateDrone()
     //{
         //if (currentDrone != null)
@@ -217,6 +224,26 @@ public class PlayerController : MonoBehaviour
 
     public void TakeDamage(int dmg)
     {
+        TakeDamage(dmg, Enemy.EnemyType.None, null);
+    }
+
+    public void TakeDamage(int dmg, Enemy.EnemyType enemyType)
+    {
+        TakeDamage(dmg, enemyType, null);
+    }
+
+    public void TakeDamage(int dmg, Enemy.EnemyType enemyType, Enemy enemy)
+    {
+        if (hasPasskey && enemyType == Enemy.EnemyType.Bat)
+        {
+            //Batに当たったらBatが倒される動作(反射)
+            //if (enemy != null)
+            //{
+                //enemy.TakeDamage(999);
+            //}
+            return;
+        }
+        
         if (isInvincible)return;
 
         dmg = Mathf.RoundToInt(dmg * damageRate);
